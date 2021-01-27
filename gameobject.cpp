@@ -8,13 +8,6 @@ gameobject::gameobject() {}
 
 gameobject::~gameobject() {}
 
-void gameobject::SetCollider() {
-
-
-
-
-}
-
 void gameobject::SetTextureFromImage() {
 
     Image image = LoadImage("player.png");
@@ -24,10 +17,20 @@ void gameobject::SetTextureFromImage() {
     m_textureLoaded = true;
 }
 
-void gameobject::SetObjectShape(char *shapeName) {
-    if(shapeName == "circle") p_isCircle = true;
-    if(shapeName == "box") p_isBox = true;
-    if(shapeName == "rect") p_isRect = true;
+void gameobject::SetObjectShape(char *shapeName, float width, float height) {
+    if(shapeName == "circle") {
+        p_isCircle = true;
+    }
+    if(shapeName == "box") {
+        p_isBox = true;
+    }
+    if(shapeName == "rect") {
+        p_isRect = true;
+    }
+
+    shapeSize = {width, height};
+    m_collisionBox.height = height;
+    m_collisionBox.width =width;
 
 }
 
@@ -37,26 +40,22 @@ void gameobject::SetColour(Color color) {
 
 void gameobject::Draw() {
 
-    DrawTextureEx(m_texture, m_position, 0, 2.0f, WHITE);
 
     if(p_isRect){
-
+        DrawRectangle((int)m_position.x, (int)m_position.y, (int)shapeSize.x, (int)shapeSize.y, objectColor);
+    }
+    if(p_isBox){
+        DrawRectangleLines((int)m_position.x, (int)m_position.y, (int)shapeSize.x, (int)shapeSize.y, objectColor);
     }
 
+    DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
 }
 
 
 void gameobject::Update(float deltaTime){
 
-    m_collisionBox.x = m_position.x - 16.5f;
-    m_collisionBox.y = m_position.y - 16.5f;
-
-    if(m_textureLoaded){
-        m_collisionBox.x = m_position.x - (float)m_texture.width;
-        m_collisionBox.y = m_position.y - (float)m_texture.height;
-    }
-
-
+    m_collisionBox.x = m_position.x;
+    m_collisionBox.y = m_position.y;
 
 }
 
@@ -72,7 +71,9 @@ void gameobject::SetVelocity(Vector2 vel) {m_velocity = vel;}
 bool gameobject::checkColliders(Rectangle other) {
     auto collision = CheckCollisionRecs(m_collisionBox, other);
     if (collision) m_boxcollision = GetCollisionRec(m_collisionBox, other);
-    if (collision) return true;
+    if (collision) {
+        return true;
+    }
     return false;
 }
 

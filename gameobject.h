@@ -26,21 +26,22 @@ public:
 
     bool checkColliders(Rectangle other);
 
-    void SetCollider();
     void SetTextureFromImage();
-    void SetObjectShape(char* shapeName);
+    void SetObjectShape(char* shapeName, float width, float height);
     void SetColour(Color color);
-
+    Rectangle GetCollider(){return m_collisionBox;}
 private:
 
-    bool p_isCircle = false;
-    bool p_isBox = false;
-    bool p_isRect = false;
+    bool p_isCircle;
+    bool p_isBox;
+    bool p_isRect;
+
 
     Color objectColor = WHITE;
+    Vector2 shapeSize = {0,0};
 
 protected:
-    
+
     Vector2 m_position = {0,0};
     Vector2 m_velocity = {0,0};
 

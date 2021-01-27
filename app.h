@@ -17,7 +17,7 @@ public:
     bool running = false;
 
 private:
-
+    Vector2 mousePos;
 
 protected:
     void m_update(float deltaTime);

@@ -10,22 +10,22 @@ scene::~scene() {}
 void scene::Init(){
 
     player = new gameobject();
-    player->SetPosition({200,200});
-    player->SetObjectShape("box");
+    player->SetPosition({30,320});
+    player->SetObjectShape("box", 20,20);
     player->SetColour(RED);
 
 
-    obstacle = new gameobject();
-    obstacle->SetPosition({300,100});
-    obstacle->SetObjectShape("rect");
-    obstacle->SetColour(WHITE);
-    obstacles.push_back(obstacle);
+    gameobject* a1 = new gameobject();
+    a1->SetPosition({0,400});
+    a1->SetObjectShape("rect",200,50);
+    a1->SetColour(GRAY);
+    obstacles.push_back(a1);
 
-    gameobject* newfloor = new gameobject();
-    newfloor->SetPosition({10,900});
-
-    floor.push_back(newfloor);
-
+    gameobject* a2 = new gameobject();
+    a2->SetPosition({300, 300});
+    a2->SetObjectShape("rect", 150, 150);
+    a2->SetColour(GREEN);
+    obstacles.push_back(a2);
 
 }
 
@@ -33,41 +33,43 @@ void scene::Init(){
 
 
 void scene::Update(float deltaTime) {
-
-    player->Update(deltaTime);
-
-    for (auto barrier : obstacles){
-        barrier->Update(deltaTime);
-    }
-    for (auto ground : floor){
-        ground->Update(deltaTime);
-    }
-
     float Xpos = 0;
     float Ypos = 0;
 
+    player->Update(deltaTime);
 
-    if (IsKeyDown(KEY_D)){
-        Xpos =5;
+    player->SetPosition({player->GetPosition().x, player->GetPosition().y + gravity});
+
+
+    for (auto barrier : obstacles){
+        barrier->Update(deltaTime);
+        if(barrier->checkColliders(player->GetCollider())){
+            gravity = 0;
+            break;
+        }
+        if(!barrier->checkColliders(player->GetCollider())){
+            gravity = 2;
+            if (IsKeyDown(KEY_S)) Ypos =5;
+        }
+
     }
 
-    if (IsKeyDown(KEY_A)){
-        Xpos = -5;
-    }
 
 
-    if (IsKeyDown(KEY_S)){
-        Ypos =5;
-    }
-    if (IsKeyDown(KEY_W)){
-        Ypos = -5;
-    }
+    if(IsKeyPressed(KEY_SPACE)) Ypos = -50;
+    if (IsKeyDown(KEY_D)) Xpos =5;
+    if (IsKeyDown(KEY_A)) Xpos = -5;
 
+    if (IsKeyDown(KEY_W)) Ypos = -5;
 
     player->SetPosition({(Xpos + player->GetPosition().x),(Ypos+ player->GetPosition().y)});
 }
 
 void scene::Draw(){
+
+    for(auto obs : obstacles){
+        obs->Draw();
+    }
 
     player->Draw();
 

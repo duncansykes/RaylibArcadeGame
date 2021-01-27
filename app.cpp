@@ -6,6 +6,9 @@
 #include "gameobject.h"
 #include "scene.h"
 #include <iostream>
+#include <string>
+#include <sstream>
+
 
 app::app(int window_width, int window_height, float fps, char* title) {
 
@@ -41,7 +44,6 @@ void app::run() {
         float deltaTime = GetFrameTime();
         m_update(deltaTime);
         mainScene->Update(deltaTime);
-
         m_draw();
     }
 
@@ -54,7 +56,16 @@ void app::m_draw() {
     ClearBackground(BLACK);
     // Code to draw here
 
-    DrawText("YOU",100,100, 50, RED);
+    std::ostringstream mPosX; mPosX << mousePos.x;
+    std::ostringstream mPosY; mPosY << mousePos.y;
+
+    std::string posTitle = "Mouse Position: ";
+    std::string stringX(mPosX.str()); std::string stringY(mPosY.str());
+
+    std::string displayUpdateMousePosition = posTitle + stringX + "," + stringY;
+
+    DrawText(displayUpdateMousePosition.c_str(),10,10, 50, WHITE);
+
     mainScene->Draw();
 
     EndDrawing();
@@ -62,6 +73,6 @@ void app::m_draw() {
 }
 
 void app::m_update(float deltaTime) {
-
+    mousePos = GetMousePosition();
 
 }
