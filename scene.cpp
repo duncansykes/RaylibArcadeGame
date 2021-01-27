@@ -20,24 +20,31 @@ void scene::Init(){
     // Grey platform
     gameobject* a1 = new gameobject();
     a1->SetPosition({0,400});
-    a1->SetObjectShape("rect",200,50);
+    a1->SetObjectShape("rect",900,50);
     a1->SetColour(GRAY);
     obstacles.push_back(a1);
 
-    // Green Box
     gameobject* a2 = new gameobject();
-    a2->SetPosition({greenboxX, 200});
-    a2->SetObjectShape("rect", 60, 60);
-    a2->SetColour(GREEN);
+    a2->SetPosition({0,50});
+    a2->SetObjectShape("rect",900,50);
+    a2->SetColour(GRAY);
     obstacles.push_back(a2);
 
-    gameobject* a24 = new gameobject();
-    a24->SetPosition({greenboxX, 300});
-    a24->SetObjectShape("rect", 60, 60);
-    a24->SetColour(GREEN);
-    obstacles.push_back(a24);
 
-    
+
+    float amount = 14;
+    float offset = 19.3f;
+    gameobject *a;
+    for (int j = 0; j < amount; j++) {
+        a =  new gameobject();
+        a->SetPosition({
+            ((float)j * offset) + 100 ,
+            ((float)j * offset) + 100
+        });
+        a->SetObjectShape("rect", 50, 50);
+        a->SetColour(GREEN);
+        obstacles.push_back(a);
+    }
 
 
 }
@@ -53,7 +60,7 @@ void scene::Update(float deltaTime) {
 
 
 
-    if(player->GetPosition().y >= 500){
+    if(player->GetPosition().y >= 500 || player->GetPosition().y <= 0){
         player->SetPosition({1,310});
     }
 
@@ -62,6 +69,16 @@ void scene::Update(float deltaTime) {
         barrier->Update(deltaTime);
         if(barrier->checkColliders(player->GetCollider())){
             if (IsKeyDown(KEY_W)) Ypos = -5;
+            if(IsKeyPressed(KEY_SPACE)){
+                if(gravityFlipped == true){
+                    gravityFlipped = false;
+                    return;
+                }
+                if (gravityFlipped == false){
+                    gravityFlipped = true;
+                    return;
+                }
+            }
             gravity = 0;
             break;
         }
@@ -76,19 +93,11 @@ void scene::Update(float deltaTime) {
         }
     }
 
-    if(IsKeyPressed(KEY_SPACE)){
-        if(gravityFlipped == true){
-            gravityFlipped = false;
-            return;
-        }
-        if (gravityFlipped == false){
-            gravityFlipped = true;
-            return;
-        }
-    }
+
     if (IsKeyDown(KEY_D)) Xpos =5;
     if (IsKeyDown(KEY_A)) Xpos = -5;
-
+    if(IsMouseButtonDown(3)) player->SetColour(BLUE);
+    if(IsMouseButtonDown(1)) player->SetColour(RED);
 
     player->SetPosition({player->GetPosition().x, player->GetPosition().y + gravity});
     player->SetPosition({(Xpos + player->GetPosition().x),(Ypos+ player->GetPosition().y)});

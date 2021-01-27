@@ -39,7 +39,7 @@ void app::run() {
 
     mainScene->Init();
 
-
+    HideCursor();
     while(!WindowShouldClose()){
         float deltaTime = GetFrameTime();
         m_update(deltaTime);
