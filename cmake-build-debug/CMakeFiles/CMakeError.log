@@ -1,0 +1,30 @@
+Performing C SOURCE FILE Test COMPILER_HAS_THOSE_TOGGLES failed with the following output:
+Change Dir: C:/Users/s200490/CLionProjects/default/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):nmake /nologo cmTC_fd26b\fast && 	"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\bin\HostX86\x86\nmake.exe"  -f CMakeFiles\cmTC_fd26b.dir\build.make /nologo -L                  CMakeFiles\cmTC_fd26b.dir\build
+Building C object CMakeFiles/cmTC_fd26b.dir/src.c.obj
+	C:\PROGRA~2\MICROS~2\2019\ENTERP~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @C:\Users\s200490\AppData\Local\Temp\nm20E1.tmp
+cl : Command line error D8021 : invalid numeric argument '/Werror=pointer-arith'
+NMAKE : fatal error U1077: 'C:\PROGRA~2\MICROS~2\2019\ENTERP~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe' : return code '0x2'
+Stop.
+NMAKE : fatal error U1077: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\bin\HostX86\x86\nmake.exe"' : return code '0x2'
+Stop.
+
+
+Source file was:
+int main(void) { return 0; }
+Determining if the include file pthread.h exists failed with the following output:
+Change Dir: C:/Users/s200490/CLionProjects/default/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):nmake /nologo cmTC_2b719\fast && 	"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\bin\HostX86\x86\nmake.exe"  -f CMakeFiles\cmTC_2b719.dir\build.make /nologo -L                  CMakeFiles\cmTC_2b719.dir\build
+Building C object CMakeFiles/cmTC_2b719.dir/CheckIncludeFile.c.obj
+	C:\PROGRA~2\MICROS~2\2019\ENTERP~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @C:\Users\s200490\AppData\Local\Temp\nm21AD.tmp
+CheckIncludeFile.c
+C:\Users\s200490\CLionProjects\default\cmake-build-debug\CMakeFiles\CMakeTmp\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'pthread.h': No such file or directory
+NMAKE : fatal error U1077: 'C:\PROGRA~2\MICROS~2\2019\ENTERP~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe' : return code '0x2'
+Stop.
+NMAKE : fatal error U1077: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\bin\HostX86\x86\nmake.exe"' : return code '0x2'
+Stop.
+
+
+

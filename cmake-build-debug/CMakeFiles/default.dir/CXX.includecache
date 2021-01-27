@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/s200490/CLionProjects/default/gameobject.cpp
+gameobject.h
+C:/Users/s200490/CLionProjects/default/gameobject.h
+
+C:/Users/s200490/CLionProjects/default/gameobject.h
+raylib.h
+C:/Users/s200490/CLionProjects/default/raylib.h
+raymath.h
+C:/Users/s200490/CLionProjects/default/raymath.h
+
+_deps/raylib-src/src/raylib.h
+stdarg.h
+-
+stdbool.h
+-
+
+_deps/raylib-src/src/raymath.h
+raylib.h
+_deps/raylib-src/src/raylib.h
+math.h
+-
+
