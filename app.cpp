@@ -64,7 +64,7 @@ void app::m_draw() {
 
     std::string displayUpdateMousePosition = posTitle + stringX + "," + stringY;
 
-    DrawText(displayUpdateMousePosition.c_str(),10,10, 50, WHITE);
+    DrawText(displayUpdateMousePosition.c_str(),10,10, 10, WHITE);
 
     mainScene->Draw();
 

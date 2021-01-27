@@ -47,8 +47,9 @@ void gameobject::Draw() {
     if(p_isBox){
         DrawRectangleLines((int)m_position.x, (int)m_position.y, (int)shapeSize.x, (int)shapeSize.y, objectColor);
     }
-
-    DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
+    if(showDebugColliders) {
+        DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
+    }
 }
 
 
@@ -56,6 +57,18 @@ void gameobject::Update(float deltaTime){
 
     m_collisionBox.x = m_position.x;
     m_collisionBox.y = m_position.y;
+
+    if(IsKeyPressed(KEY_TAB)) {
+        if (showDebugColliders == false) {
+            showDebugColliders = true;
+            return;
+        }
+        if(showDebugColliders == true){
+            showDebugColliders = false;
+            return;
+        }
+    }
+
 
 }
 

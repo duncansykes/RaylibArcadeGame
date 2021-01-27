@@ -30,12 +30,16 @@ public:
     void SetObjectShape(char* shapeName, float width, float height);
     void SetColour(Color color);
     Rectangle GetCollider(){return m_collisionBox;}
+
+    bool isActive = true;
+
 private:
 
     bool p_isCircle;
     bool p_isBox;
     bool p_isRect;
 
+    bool showDebugColliders = false;
 
     Color objectColor = WHITE;
     Vector2 shapeSize = {0,0};
