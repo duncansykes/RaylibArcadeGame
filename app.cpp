@@ -24,8 +24,6 @@ app::app(int window_width, int window_height, float fps, char* title) {
 app::~app() {
 
 
-
-
 }
 
 
@@ -56,15 +54,17 @@ void app::m_draw() {
     ClearBackground(BLACK);
     // Code to draw here
 
-    std::ostringstream mPosX; mPosX << mousePos.x;
-    std::ostringstream mPosY; mPosY << mousePos.y;
 
-    std::string posTitle = "Mouse Position: ";
+
+    std::ostringstream mPosX; mPosX << mainScene->player->GetPosition().x;
+    std::ostringstream mPosY; mPosY << mainScene->player->GetPosition().y;
+
+    std::string posTitle = "Player Position: ";
     std::string stringX(mPosX.str()); std::string stringY(mPosY.str());
 
     std::string displayUpdateMousePosition = posTitle + stringX + "," + stringY;
 
-    DrawText(displayUpdateMousePosition.c_str(),10,10, 10, WHITE);
+    DrawText(displayUpdateMousePosition.c_str(),30,10, 10, WHITE);
 
     mainScene->Draw();
 

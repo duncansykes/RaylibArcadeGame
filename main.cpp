@@ -4,7 +4,7 @@
 
 int main() {
 
-    app newApp(1000,500,60.0f, "newApp");
+    app newApp(250,500,60.0f, "newApp");
 
     newApp.run();
 

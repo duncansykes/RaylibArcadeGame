@@ -23,7 +23,14 @@ public:
     std::vector<gameobject*> obstacles;
     std::vector<gameobject*> floor;
 
-    float gravity = 5.0f;
+    std::vector<gameobject*> spikes;
+    std::vector<gameobject*> enemy;
+
+    void GravityUpdate();
+
+
+
+    float gravity = -5.0f;
     float defaultGravity = 5.0f;
 
     bool gravityFlipped = false;

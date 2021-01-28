@@ -39,17 +39,19 @@ void gameobject::SetColour(Color color) {
 }
 
 void gameobject::Draw() {
+    if(isActive) {
+        if (p_isRect) {
+            DrawRectangle((int) m_position.x, (int) m_position.y, (int) shapeSize.x, (int) shapeSize.y, objectColor);
+        }
+        if (p_isBox) {
+            DrawRectangleLines((int) m_position.x, (int) m_position.y, (int) shapeSize.x, (int) shapeSize.y,
+                               objectColor);
+        }
+        if (showDebugColliders) {
+            DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
+        }
+    }
 
-
-    if(p_isRect){
-        DrawRectangle((int)m_position.x, (int)m_position.y, (int)shapeSize.x, (int)shapeSize.y, objectColor);
-    }
-    if(p_isBox){
-        DrawRectangleLines((int)m_position.x, (int)m_position.y, (int)shapeSize.x, (int)shapeSize.y, objectColor);
-    }
-    if(showDebugColliders) {
-        DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
-    }
 }
 
 
@@ -59,11 +61,11 @@ void gameobject::Update(float deltaTime){
     m_collisionBox.y = m_position.y;
 
     if(IsKeyPressed(KEY_TAB)) {
-        if (showDebugColliders == false) {
+        if (!showDebugColliders) {
             showDebugColliders = true;
             return;
         }
-        if(showDebugColliders == true){
+        if(showDebugColliders){
             showDebugColliders = false;
             return;
         }
@@ -90,3 +92,8 @@ bool gameobject::checkColliders(Rectangle other) {
     return false;
 }
 
+spike::spike() {
+
+}
+
+spike::~spike() noexcept {}

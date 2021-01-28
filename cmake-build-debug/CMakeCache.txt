@@ -722,7 +722,7 @@ CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //GLFW pkg-config Libs.private
-GLFW_PKG_LIBS:INTERNAL= -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32
+GLFW_PKG_LIBS:INTERNAL= -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32 -lgdi32
 //Use Wayland for window creation
 GLFW_USE_WAYLAND:INTERNAL=
 //Replace any OFF by default with ${OFF} to have it covered by
