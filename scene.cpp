@@ -3,7 +3,9 @@
 //
 #include <string>
 #include "scene.h"
+#include <random>
 #include <iostream>
+#include <time.h>
 scene::scene() {}
 scene::~scene() {}
 
@@ -12,7 +14,7 @@ void scene::Init(){
     player = new gameobject();
     player->SetPosition({45,290});
     player->SetObjectShape("box", 20,20);
-    player->SetColour(RED);
+    player->SetColour(GREEN);
 
 
     auto* wall_one = new gameobject();
@@ -29,27 +31,33 @@ void scene::Init(){
     wall_two->SetObjectShape("rect", 50, 500);
     obstacles.push_back(wall_two);
 
+    srand(time(NULL));
+}
 
+void scene::SpawnSpikes(int type) {
 
-
-    float amount = 4;
-    float offset = 0.5f;
-    spike* spikeVariationOne;
-    for(int x = 0; x < amount; x++){
-        spikeVariationOne = new spike();
-        spikeVariationOne->name = "Spike One";
-        spikeVariationOne->damageAmount = 10;
-        spikeVariationOne->SetPosition({40, 0 + ((float)x * offset) });
+    if(type == 1) {
+        spike *spikeVariationOne = new spike();
+        spikeVariationOne->SetPosition({40, 0});
         spikeVariationOne->SetObjectShape("box", 20, 20);
-        spikeVariationOne->SetColour(PINK);
-        std::cout << x << std::endl;
+        createSpikes(spikeVariationOne);
+
+        renderedSpikes.push_back(spikes[0]);
+        spikes.pop_back();
     }
 
-    spikes.push_back((spikeVariationOne));
+    if (type == 2) {
+        spike *spikeVariationOne = new spike();
+        spikeVariationOne->SetPosition({180, 0});
+        spikeVariationOne->SetObjectShape("box", 20, 20);
+        createSpikes(spikeVariationOne);
+
+        renderedSpikes.push_back(spikes[0]);
+        spikes.pop_back();
+    }
 
 
 }
-
 
 void scene::GravityUpdate(){
     player->SetPosition({player->GetPosition().x, player->GetPosition().y + gravity});
@@ -57,8 +65,20 @@ void scene::GravityUpdate(){
 }
 
 void scene::Update(float deltaTime) {
+
     float Xpos = 0;
     float Ypos = 0;
+    float aTime = GetFrameTime();
+
+    spawnTimer += aTime * 1;
+
+    if(spawnTimer >= 0.3) {
+        int randomSelection = rand() % 2 + 1;
+        std::cout << randomSelection << std::endl;
+        SpawnSpikes(randomSelection);
+        spawnTimer = 0;
+    }
+
 
     player->Update(deltaTime);
 
@@ -81,22 +101,26 @@ void scene::Update(float deltaTime) {
         if(!barrier->checkColliders(player->GetCollider())){}
     }
 
-    for (auto spike : spikes){
-        spike->Update(deltaTime);
-        spike->SetPosition({spike->GetPosition().x, spike->GetPosition().y + 5});
 
-        if(spike->checkColliders(player->GetCollider())){
-            player->SetColour(GREEN);
-            player->isActive = false;
-            spike->isActive = false;
-            CloseWindow();
-            break;
-        }
-        if(spike->GetPosition().y >= 500){
-            spike->SetPosition({spike->GetPosition().x, 0});
-        }
+    if(!renderedSpikes.empty()){
+        for(auto spike : renderedSpikes){
+            spike->Update(deltaTime);
+            spike->SetPosition({spike->GetPosition().x, spike->GetPosition().y + 5});
+            if(spike->checkColliders(player->GetCollider())){
+                player->SetColour(GREEN);
+               // player->isActive = false;
+                spike->isActive = false;
+                renderedSpikes.pop_back();
 
+                break;
+            }
+            if(spike->GetPosition().y >= 500){
+                //std::cout << spike->GetPosition().y << std::endl;
+              //  spike->SetPosition({spike->GetPosition().x, 0});
+            }
+        }
     }
+
     if(IsMouseButtonDown(3)) player->SetColour(BLUE);
     if(IsMouseButtonDown(1)) player->SetColour(RED);
 
@@ -108,9 +132,12 @@ void scene::Draw(){
     for(auto obs : obstacles){
         obs->Draw();
     }
-    for(auto sk : spikes){
-        sk->Draw();
+    if(!renderedSpikes.empty()) {
+        for(auto sp : renderedSpikes){
+            sp->Draw();
+        }
     }
+
     player->Draw();
 
 }

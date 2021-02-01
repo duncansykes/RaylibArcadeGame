@@ -29,6 +29,9 @@ public:
 
     void SetTextureFromImage();
     void SetObjectShape(char* shapeName, float width, float height);
+    void SetObjectShape(std::string name, Vector2 size);
+    Vector2 GetObjectShape();
+
     void SetColour(Color color);
     Rectangle GetCollider(){return m_collisionBox;}
 
@@ -54,6 +57,7 @@ protected:
     bool p_isBox;
     bool p_isRect;
     bool p_isSpikes;
+    std::string shapename;
 
     bool showDebugColliders = false;
 

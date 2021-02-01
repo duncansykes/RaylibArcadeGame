@@ -27,10 +27,28 @@ void gameobject::SetObjectShape(char *shapeName, float width, float height) {
     if(shapeName == "rect") {
         p_isRect = true;
     }
-
+    shapename = shapeName;
     shapeSize = {width, height};
     m_collisionBox.height = height;
     m_collisionBox.width =width;
+
+}
+
+void gameobject::SetObjectShape(std::string name, Vector2 size) {
+    if(name == "circle") {
+        p_isCircle = true;
+    }
+    if(name == "box") {
+        p_isBox = true;
+    }
+    if(name == "rect") {
+        p_isRect = true;
+    }
+
+    shapename = name;
+    shapeSize = size;
+    m_collisionBox.height = size.y;
+    m_collisionBox.width = size.x;
 
 }
 
@@ -53,7 +71,10 @@ void gameobject::Draw() {
     }
 
 }
+Vector2 gameobject::GetObjectShape() {
 
+    return shapeSize;
+}
 
 void gameobject::Update(float deltaTime){
 
