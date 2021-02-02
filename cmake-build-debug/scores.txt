@@ -1,2 +1,4 @@
 name : score
 
+aaaa : 289.138
+n00b : 467.113
