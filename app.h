@@ -15,7 +15,7 @@ public:
 
     void run();
     bool running = false;
-
+    float SCORE = 0;
 private:
     Vector2 mousePos;
 

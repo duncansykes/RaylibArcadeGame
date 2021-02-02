@@ -26,7 +26,7 @@ public:
         auto* spike = new gameobject();
         spike->SetPosition(Data->GetPosition());
         spike->SetObjectShape(Data->name, Data->GetObjectShape());
-        spike->SetColour(RED);
+        spike->SetColour(Data->getColor());
         spikes.push_back(spike);
         return spike;
 
@@ -42,10 +42,10 @@ public:
     std::vector<gameobject*> enemy;
 
     void GravityUpdate();
-
+    bool running = true;
     float gravity = -5.0f;
     float defaultGravity = 5.0f;
-
+    float score = 0;
     bool gravityFlipped = false;
 };
 

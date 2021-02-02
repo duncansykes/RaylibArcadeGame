@@ -34,12 +34,19 @@ void scene::Init(){
     srand(time(NULL));
 }
 
+
+
+
+
+
+
 void scene::SpawnSpikes(int type) {
 
     if(type == 1) {
         spike *spikeVariationOne = new spike();
         spikeVariationOne->SetPosition({40, 0});
         spikeVariationOne->SetObjectShape("box", 20, 20);
+        spikeVariationOne->SetColour(RED);
         createSpikes(spikeVariationOne);
 
         renderedSpikes.push_back(spikes[0]);
@@ -48,14 +55,25 @@ void scene::SpawnSpikes(int type) {
 
     if (type == 2) {
         spike *spikeVariationOne = new spike();
-        spikeVariationOne->SetPosition({180, 0});
-        spikeVariationOne->SetObjectShape("box", 20, 20);
+        spikeVariationOne->SetColour(RED);
+        spikeVariationOne->SetPosition({185, 0});
+        spikeVariationOne->SetObjectShape("box", 15, 20);
         createSpikes(spikeVariationOne);
 
         renderedSpikes.push_back(spikes[0]);
         spikes.pop_back();
     }
 
+    if(type == 3)
+    {
+        gameobject* alien = new gameobject();
+        alien->SetPosition({100, 0});
+        alien->SetObjectShape("rect",{15,15});
+        alien->SetColour(WHITE);
+        createSpikes(alien);
+        renderedSpikes.push_back(spikes[0]);
+        spikes.pop_back();
+    }
 
 }
 
@@ -72,9 +90,9 @@ void scene::Update(float deltaTime) {
 
     spawnTimer += aTime * 1;
 
-    if(spawnTimer >= 0.3) {
-        int randomSelection = rand() % 2 + 1;
-        std::cout << randomSelection << std::endl;
+    if(spawnTimer >= 0.26) {
+        int randomSelection = rand() % 3 + 1;
+        //std::cout << randomSelection << std::endl;
         SpawnSpikes(randomSelection);
         spawnTimer = 0;
     }
@@ -89,11 +107,13 @@ void scene::Update(float deltaTime) {
             if(barrier->name == "Right Wall"){
                 if (IsKeyPressed(KEY_SPACE)) {
                     Xpos = -140;
+                    score += 1;
                 }
             }
             if(barrier->name == "Left Wall") {
                 if (IsKeyPressed(KEY_SPACE)) {
                     Xpos = 140;
+                    score += 1;
              }
             }
             break;
@@ -101,6 +121,10 @@ void scene::Update(float deltaTime) {
         if(!barrier->checkColliders(player->GetCollider())){}
     }
 
+    if(WindowShouldClose())
+    {
+        CloseWindow();
+    }
 
     if(!renderedSpikes.empty()){
         for(auto spike : renderedSpikes){
@@ -108,23 +132,30 @@ void scene::Update(float deltaTime) {
             spike->SetPosition({spike->GetPosition().x, spike->GetPosition().y + 5});
             if(spike->checkColliders(player->GetCollider())){
                 player->SetColour(GREEN);
-               // player->isActive = false;
-                spike->isActive = false;
-                renderedSpikes.pop_back();
 
+                //player->isActive = false;
+                spike->isActive = false;
+                //renderedSpikes.pop_back();
+                player->TakeDamage(1);
                 break;
             }
-            if(spike->GetPosition().y >= 500){
-                //std::cout << spike->GetPosition().y << std::endl;
-              //  spike->SetPosition({spike->GetPosition().x, 0});
-            }
+
         }
     }
 
     if(IsMouseButtonDown(3)) player->SetColour(BLUE);
     if(IsMouseButtonDown(1)) player->SetColour(RED);
 
+    //player->SetPosition(Vector2Lerp(player->GetPosition(), {Xpos,Ypos}, 100));
     player->SetPosition({(Xpos + player->GetPosition().x),(Ypos+ player->GetPosition().y)});
+
+    if(player->getHealth() <= 0)
+    {
+        running = false;
+    }
+
+
+
 }
 
 void scene::Draw(){

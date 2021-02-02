@@ -65,6 +65,7 @@ void gameobject::Draw() {
             DrawRectangleLines((int) m_position.x, (int) m_position.y, (int) shapeSize.x, (int) shapeSize.y,
                                objectColor);
         }
+
         if (showDebugColliders) {
             DrawRectangleLinesEx(m_collisionBox, 2, WHITE);
         }

@@ -38,10 +38,12 @@ void app::run() {
     mainScene->Init();
 
     HideCursor();
-    while(!WindowShouldClose()){
+    while(running){
         float deltaTime = GetFrameTime();
         m_update(deltaTime);
-        mainScene->Update(deltaTime);
+        if(mainScene->running) {
+            mainScene->Update(deltaTime);
+        }
         m_draw();
     }
 
@@ -54,19 +56,30 @@ void app::m_draw() {
     ClearBackground(BLACK);
     // Code to draw here
 
+    if(mainScene->running) {
+        mainScene->Draw();
+        std::ostringstream mPosX;
+        mPosX << mainScene->score;
+        std::ostringstream mPosY;
+        mPosY << mainScene->player->getHealth();
+
+        std::string posTitle = "Player Score: ";
+        std::string stringX(mPosX.str());
+        std::string stringY(mPosY.str());
+
+        std::string displayUpdateMousePosition = posTitle + stringX + ". Health: " + stringY;
+
+        DrawText(displayUpdateMousePosition.c_str(), 0, 10, 19, WHITE);
+    }
+    else{
+        SCORE = mainScene->score;
+        DrawText("Game Over", ((int)m_windowW /2) - 43, (int)m_windowH/2, 19, RED);
+        DrawText("Refer to console.....",((int)m_windowW /2) - 80, (int)m_windowH/2 + 50, 19, WHITE);
+        running = false;
 
 
-    std::ostringstream mPosX; mPosX << mainScene->player->GetPosition().x;
-    std::ostringstream mPosY; mPosY << mainScene->player->GetPosition().y;
+    }
 
-    std::string posTitle = "Player Position: ";
-    std::string stringX(mPosX.str()); std::string stringY(mPosY.str());
-
-    std::string displayUpdateMousePosition = posTitle + stringX + "," + stringY;
-
-    DrawText(displayUpdateMousePosition.c_str(),30,10, 10, WHITE);
-
-    mainScene->Draw();
 
     EndDrawing();
 

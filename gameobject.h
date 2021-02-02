@@ -31,9 +31,20 @@ public:
     void SetObjectShape(char* shapeName, float width, float height);
     void SetObjectShape(std::string name, Vector2 size);
     Vector2 GetObjectShape();
+    Color getColor(){return objectColor;}
 
     void SetColour(Color color);
     Rectangle GetCollider(){return m_collisionBox;}
+
+    void TakeDamage(float amount)
+    {
+        lives -= amount;
+    }
+
+    float getHealth()
+    {
+        return lives;
+    }
 
     bool isActive = true;
     std::string name;
@@ -64,7 +75,7 @@ protected:
     Color objectColor = WHITE;
     Vector2 shapeSize = {0,0};
 
-
+    float lives = 50;
     bool m_textureLoaded = false;
 };
 
