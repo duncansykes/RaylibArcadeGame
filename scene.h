@@ -34,6 +34,7 @@ public:
     }
 
     float spawnTimer = 0;
+    float speedTimer = 0;
     std::vector<gameobject*> obstacles;
     std::vector<gameobject*> floor;
 

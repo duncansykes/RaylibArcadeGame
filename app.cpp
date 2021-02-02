@@ -59,9 +59,9 @@ void app::m_draw() {
     if(mainScene->running) {
         mainScene->Draw();
         std::ostringstream mPosX;
-        mPosX << mainScene->score;
+        mPosX << (int)mainScene->score;
         std::ostringstream mPosY;
-        mPosY << mainScene->player->getHealth();
+        mPosY << (int)mainScene->player->getHealth();
 
         std::string posTitle = "Player Score: ";
         std::string stringX(mPosX.str());

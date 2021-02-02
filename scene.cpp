@@ -84,19 +84,21 @@ void scene::GravityUpdate(){
 
 void scene::Update(float deltaTime) {
 
+    std::cout << speedTimer << std::endl;
+
     float Xpos = 0;
     float Ypos = 0;
     float aTime = GetFrameTime();
 
     spawnTimer += aTime * 1;
+    speedTimer += aTime * 0.1f;
 
     if(spawnTimer >= 0.26) {
         int randomSelection = rand() % 3 + 1;
-        //std::cout << randomSelection << std::endl;
+
         SpawnSpikes(randomSelection);
         spawnTimer = 0;
     }
-
 
     player->Update(deltaTime);
 
@@ -107,13 +109,13 @@ void scene::Update(float deltaTime) {
             if(barrier->name == "Right Wall"){
                 if (IsKeyPressed(KEY_SPACE)) {
                     Xpos = -140;
-                    score += 1;
+                    score += 1 + speedTimer;
                 }
             }
             if(barrier->name == "Left Wall") {
                 if (IsKeyPressed(KEY_SPACE)) {
                     Xpos = 140;
-                    score += 1;
+                    score += 1 + speedTimer;
              }
             }
             break;
@@ -129,13 +131,10 @@ void scene::Update(float deltaTime) {
     if(!renderedSpikes.empty()){
         for(auto spike : renderedSpikes){
             spike->Update(deltaTime);
-            spike->SetPosition({spike->GetPosition().x, spike->GetPosition().y + 5});
+            spike->SetPosition({spike->GetPosition().x, spike->GetPosition().y + 5 + speedTimer});
             if(spike->checkColliders(player->GetCollider())){
                 player->SetColour(GREEN);
-
-                //player->isActive = false;
                 spike->isActive = false;
-                //renderedSpikes.pop_back();
                 player->TakeDamage(1);
                 break;
             }
