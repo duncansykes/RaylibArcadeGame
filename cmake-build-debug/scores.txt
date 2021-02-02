@@ -1,6 +1,2 @@
 name : score
 
-asss : 65.7825
-poop : 553.115
-fuck : 43.891
-pppp : 234.242
