@@ -64,7 +64,7 @@ protected:
     Texture2D m_texture;
     Vector3 m_textureTransform = {0,0,0};
 
-    bool p_isCircle;
+    bool p_isCircle = false;
     bool p_isBox;
     bool p_isRect;
     bool p_isSpikes;
@@ -87,7 +87,6 @@ public:
 
     Color color;
     float damageAmount;
-
 
 
 };

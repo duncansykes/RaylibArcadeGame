@@ -32,6 +32,7 @@ void scene::Init(){
     obstacles.push_back(wall_two);
 
     srand(time(NULL));
+    system("cls");
 }
 
 
@@ -84,14 +85,16 @@ void scene::GravityUpdate(){
 
 void scene::Update(float deltaTime) {
 
-    std::cout << speedTimer << std::endl;
+   // std::cout << speedTimer << std::endl;
 
     float Xpos = 0;
     float Ypos = 0;
     float aTime = GetFrameTime();
 
     spawnTimer += aTime * 1;
-    speedTimer += aTime * 0.1f;
+    speedTimer += aTime * 0.05f;
+
+    if(IsKeyDown(KEY_E) && IsKeyDown(KEY_P)) speedTimer = 0;
 
     if(spawnTimer >= 0.26) {
         int randomSelection = rand() % 3 + 1;
@@ -145,14 +148,13 @@ void scene::Update(float deltaTime) {
     if(IsMouseButtonDown(3)) player->SetColour(BLUE);
     if(IsMouseButtonDown(1)) player->SetColour(RED);
 
-    //player->SetPosition(Vector2Lerp(player->GetPosition(), {Xpos,Ypos}, 100));
+
     player->SetPosition({(Xpos + player->GetPosition().x),(Ypos+ player->GetPosition().y)});
 
     if(player->getHealth() <= 0)
     {
         running = false;
     }
-
 
 
 }
